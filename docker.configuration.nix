@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./host-configuration.nix
   ];
 
   boot.loader = {
@@ -31,12 +32,20 @@
 
   virtualisation.docker = {
     enable = true;
+    liveRestore = false;
     storageDriver = "btrfs";
   };
 
   programs.zsh.enable = true;
 
   services.openssh.enable = true;
+
+  networking = {
+    firewall = {
+      allowedTCPPorts = [ 2377 7946 ];
+      allowedUDPPorts = [ 4789 7946 ];
+    };
+  };
 
   system.copySystemConfiguration = true;
 
